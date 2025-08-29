@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, InputSignal, OutputEmitterRef, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, InputSignal, OutputEmitterRef, input, output } from '@angular/core';
 import { Board } from '../../../../core/models/types';
 import { GameCellComponent } from '../game-cell/game-cell.component';
 
@@ -13,6 +13,5 @@ import { GameCellComponent } from '../game-cell/game-cell.component';
 export class GameBoardComponent {
   board: InputSignal<Board> = input.required<Board>();
   cellClick: OutputEmitterRef<number> = output<number>();
-
-  protected trackById = (index: number, c: { id: number }) => c.id;
+  
 }
