@@ -1,0 +1,6 @@
+.score {
+  display: flex; align-items: baseline; justify-content: center; gap: .5rem;
+  font-weight: 600;
+}
+.you { color: var(--green-strong); }
+.cpu { color: var(--red-strong); }

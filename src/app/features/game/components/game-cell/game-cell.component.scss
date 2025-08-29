@@ -1,0 +1,15 @@
+.cell {
+  inline-size: 100%;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
+}
+.cell:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.is-blue   { background: var(--blue); }
+.is-yellow { background: var(--yellow); transform: scale(1.02); }
+.is-green  { background: var(--green); }
+.is-red    { background: var(--red); }

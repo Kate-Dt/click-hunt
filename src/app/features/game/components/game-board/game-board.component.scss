@@ -1,0 +1,7 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: var(--gap);
+  inline-size: min(90vw, 520px);
+  margin-inline: auto;
+}

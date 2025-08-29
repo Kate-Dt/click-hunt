@@ -1,0 +1,34 @@
+.backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  backdrop-filter: blur(2px);
+}
+.modal {
+  position: fixed; inset: 0; display: grid; place-items: center;
+}
+.modal .title { margin: 0 0 .5rem; font-weight: 700; }
+.modal .content { margin: 0 0 1rem; }
+.modal .actions { display: flex; gap: .5rem; justify-content: end; }
+.modal .primary {
+  padding: .5rem .9rem; border: 0; border-radius: var(--radius);
+  background: var(--accent); color: var(--on-accent); cursor: pointer;
+}
+.modal .close {
+  position: absolute; top: .75rem; right: .75rem; border: 0;
+  width: 2rem; height: 2rem; border-radius: .5rem; background: transparent; color: var(--text);
+  cursor: pointer;
+}
+.modal {
+  .card {
+    background: var(--card); color: var(--text);
+  }
+}
+.modal > .card,
+.modal .card {
+  position: relative;
+  min-width: min(92vw, 420px);
+  padding: 1.1rem 1.2rem;
+  background: var(--card);
+  color: var(--text);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}

@@ -1,0 +1,8 @@
+<div class="board" role="grid" aria-label="Game board 10 by 10">
+  @for (cell of board(); track cell.id) {
+    <game-cell
+      [state]="cell.state"
+      (clicked)="cellClick.emit(cell.id)"
+    />
+  }
+</div>

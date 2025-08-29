@@ -1,0 +1,10 @@
+.controls {
+  display: flex; flex-wrap: wrap; gap: .6rem .8rem; align-items: center; justify-content: center;
+}
+label { display: inline-flex; align-items: center; gap: .4rem; }
+input { padding: .35rem .5rem; border-radius: .5rem; border: 1px solid var(--border); width: 8rem; }
+button {
+  padding: .45rem .9rem; border-radius: .6rem; border: 0; cursor: pointer; box-shadow: var(--shadow);
+  background: var(--accent); color: var(--on-accent);
+}
+button:disabled { opacity: .6; cursor: not-allowed; }

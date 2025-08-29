@@ -1,0 +1,35 @@
+<section class="wrap">
+  <h1 class="title">Click Hunt</h1>
+
+  <game-controls
+    [n]="engine.nMs()"
+    [canStart]="engine.canStart()"
+    [status]="engine.status()"
+    [min]="N_MIN"
+    [max]="N_MAX"
+    (nChange)="engine.setN($event)"
+    (start)="engine.start($event)"
+    (reset)="engine.reset()"
+  />
+
+  <scoreboard [score]="engine.score()" />
+
+  <game-board
+    [board]="engine.board()"
+    (cellClick)="engine.handleCellClick($event)"
+  />
+</section>
+
+<ui-modal
+  [open]="engine.status() === 'finished'"
+  [title]="engine.getResult()?.winner === 'player' ? 'You win!' : 'Computer wins'"
+  (close)="engine.reset()"
+>
+  <div class="card">
+    <h3 class="title">Result</h3>
+    <p>Player: {{ engine.score().player }} — Computer: {{ engine.score().computer }}</p>
+    <div class="actions">
+      <button class="primary" type="button" (click)="engine.reset()">Play again</button>
+    </div>
+  </div>
+</ui-modal>
