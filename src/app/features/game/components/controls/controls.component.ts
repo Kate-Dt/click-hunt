@@ -36,7 +36,7 @@ export class ControlsComponent {
   canStart = input.required<boolean>();
   status = input.required<GameStatus>();
   min = input<number>(200);
-  max = input<number>(3000);
+  max = input<number>(7000);
 
   // outputs
   nChange: OutputEmitterRef<number> = output<number>();
