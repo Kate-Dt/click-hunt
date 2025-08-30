@@ -1,25 +1,51 @@
 .backdrop {
-  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(2px);
 }
 .modal {
-  position: fixed; inset: 0; display: grid; place-items: center;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
 }
-.modal .title { margin: 0 0 .5rem; font-weight: 700; }
-.modal .content { margin: 0 0 1rem; }
-.modal .actions { display: flex; gap: .5rem; justify-content: end; }
+.modal .title {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+.modal .content {
+  margin: 0 0 1rem;
+}
+.modal .actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: end;
+}
 .modal .primary {
-  padding: .5rem .9rem; border: 0; border-radius: var(--radius);
-  background: var(--accent); color: var(--on-accent); cursor: pointer;
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--on-accent);
+  cursor: pointer;
 }
 .modal .close {
-  position: absolute; top: .75rem; right: .75rem; border: 0;
-  width: 2rem; height: 2rem; border-radius: .5rem; background: transparent; color: var(--text);
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  border: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--text);
   cursor: pointer;
 }
 .modal {
   .card {
-    background: var(--card); color: var(--text);
+    background: var(--card);
+    color: var(--text);
   }
 }
 .modal > .card,

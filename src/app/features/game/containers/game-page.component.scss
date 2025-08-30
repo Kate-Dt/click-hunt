@@ -1,7 +1,17 @@
 .wrap {
-  display: grid; gap: 1rem; padding: 1rem; margin: 0 auto; max-inline-size: 720px;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0 auto;
+  max-inline-size: 720px;
 }
 .title {
-  text-align: center; margin: .5rem 0 0;
-  letter-spacing: .5px; font-weight: 800;
+  text-align: center;
+  margin: 0.5rem 0 0;
+  letter-spacing: 0.5px;
+  font-weight: 800;
+}
+.card .actions {
+  display: flex;
+  justify-content: center;
 }
