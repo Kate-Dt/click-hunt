@@ -14,10 +14,7 @@
 
   <scoreboard [score]="engine.score()" />
 
-  <game-board
-    [board]="engine.board()"
-    (cellClick)="engine.handleCellClick($event)"
-  />
+  <game-board [board]="engine.board()" (cellClick)="engine.handleCellClick($event)" />
 </section>
 
 <ui-modal
@@ -28,6 +25,15 @@
   <div class="card">
     <h3 class="title">Result</h3>
     <p>Player: {{ engine.score().player }} — Computer: {{ engine.score().computer }}</p>
+
+    @if (engine.getStats().avgReactionMs !== null) {
+    <p>Average reaction: {{ engine.getStats().avgReactionMs }} ms</p>
+    } @if (engine.getStats().bestReactionMs !== null) {
+    <p>Best reaction: {{ engine.getStats().bestReactionMs }} ms</p>
+    } @if (engine.getStats().worstReactionMs !== null) {
+    <p>Worst reaction: {{ engine.getStats().worstReactionMs }} ms</p>
+    }
+
     <div class="actions">
       <button class="primary" type="button" (click)="engine.reset()">Play again</button>
     </div>

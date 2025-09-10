@@ -7,9 +7,12 @@
 }
 .title {
   text-align: center;
-  margin: 0.5rem 0 0;
   letter-spacing: 0.5px;
   font-weight: 800;
+  margin: 0;
+}
+.card {
+  padding: 1rem;
 }
 .card .actions {
   display: flex;

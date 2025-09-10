@@ -17,8 +17,12 @@ export class GameEngineService {
   readonly status: WritableSignal<GameStatus> = signal<GameStatus>('idle');
   readonly nMs: WritableSignal<number> = signal<number>(800);
   readonly targetId: WritableSignal<number | null> = signal<number | null>(null);
-
-  // derived
+  // successful clicks reaction count
+  private totalReactionMsAcc = 0;
+  private bestReactionMsAcc = Infinity;
+  private worstReactionMsAcc = 0;
+  // round timing
+  private roundStartedAt: number | null = null;
   readonly canStart: Signal<boolean> = computed(
     () => this.status() !== 'running' && this.nMs() >= N_MIN && this.nMs() <= N_MAX
   );
@@ -43,12 +47,24 @@ export class GameEngineService {
     this.resetBoardAndScores();
     this.status.set('idle');
     this.targetId.set(null);
+    this.totalReactionMsAcc = 0;
+    this.bestReactionMsAcc = Infinity;
+    this.worstReactionMsAcc = 0;
+    this.roundStartedAt = null;
   }
 
   handleCellClick(cellId: number): void {
     if (this.status() !== 'running') return;
     const current = this.targetId();
     if (current == null || current !== cellId) return;
+
+    if (this.roundStartedAt != null) {
+      const delta = performance.now() - this.roundStartedAt;
+      this.totalReactionMsAcc += delta;
+      this.bestReactionMsAcc = Math.min(this.bestReactionMsAcc, delta);
+      this.worstReactionMsAcc = Math.max(this.worstReactionMsAcc, delta);
+      this.roundStartedAt = null;
+    }
 
     this.clearTimer();
     this.paint(cellId, 'green');
@@ -68,11 +84,9 @@ export class GameEngineService {
     };
   }
 
-  // ---- internals
-
   private nextRound(): void {
     // choose among blue cells only
-    const candidates = this.board().filter(c => c.state === 'blue');
+    const candidates = this.board().filter((c) => c.state === 'blue');
     if (candidates.length === 0) {
       this.finishByScore();
       return;
@@ -81,12 +95,15 @@ export class GameEngineService {
     this.paint(picked.id, 'yellow');
     this.targetId.set(picked.id);
 
+    this.roundStartedAt = performance.now();
+
     this.roundTimer = setTimeout(() => {
       const cur = this.targetId();
       if (cur != null) {
         this.paint(cur, 'red');
         this.bumpScore('computer');
         this.targetId.set(null);
+        this.roundStartedAt = null;
         if (this.checkFinish()) return;
         setTimeout(() => this.nextRound(), 120);
       }
@@ -106,16 +123,17 @@ export class GameEngineService {
     this.clearTimer();
     this.status.set('finished');
     this.targetId.set(null);
+    this.roundStartedAt = null;
   }
 
   private bumpScore(who: 'player' | 'computer'): void {
-    this.score.update(s => who === 'player'
-      ? { ...s, player: s.player + 1 }
-      : { ...s, computer: s.computer + 1 });
+    this.score.update((s) =>
+      who === 'player' ? { ...s, player: s.player + 1 } : { ...s, computer: s.computer + 1 }
+    );
   }
 
   private paint(id: number, state: Cell['state']): void {
-    this.board.update(b => b.map(c => (c.id === id ? { ...c, state } : c)));
+    this.board.update((b) => b.map((c) => (c.id === id ? { ...c, state } : c)));
     if (state !== 'yellow') this.targetId.set(null);
   }
 
@@ -140,5 +158,24 @@ export class GameEngineService {
       clearTimeout(this.roundTimer);
       this.roundTimer = null;
     }
+  }
+
+  getStats(): {
+    avgReactionMs: number | null;
+    bestReactionMs: number | null;
+    worstReactionMs: number | null;
+  } {
+    const hits = this.score().player;
+    if (hits <= 0) {
+      return { avgReactionMs: null, bestReactionMs: null, worstReactionMs: null };
+    }
+    const avg = Math.round(this.totalReactionMsAcc / hits);
+    const best = Math.round(this.bestReactionMsAcc);
+    const worst = Math.round(this.worstReactionMsAcc);
+    return {
+      avgReactionMs: avg,
+      bestReactionMs: Number.isFinite(best) ? best : null,
+      worstReactionMs: worst,
+    };
   }
 }

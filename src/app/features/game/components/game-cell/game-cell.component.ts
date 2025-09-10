@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, InputSignal, OutputEmitterRef, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  InputSignal,
+  OutputEmitterRef,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CellState } from '../../../../core/models/types';
 
